@@ -1,7 +1,89 @@
-name: rain
-age: 18
-list:
-  - a
-  - b
-  - c
-  - d
+desc: |
+  Captain 自动发布
+  1. 发布流程（手动选择目标环境）
+  2. 发布DevB
+  3. 发布Test
+
+# 关联IDev
+task_idev: &task_idev
+  - op_name: 点击IDev输入框
+    op_type: click
+    data: idev-input.png
+    interval: 1
+  - op_name: 输入IDev
+    op_type: input
+    data: "3760646"
+  - op_name: 点击IDev记录
+    op_type: click
+    data: idev-record.png
+
+# 前置检查
+task_check: &task_check
+  - op_name: 点击原因输入框
+    op_type: click
+    data: pre-check.png
+  - op_name: 点击其他选项
+    op_type: click
+    data: pre-check-other.png
+  - op_name: 点击其他选项
+    op_type: click
+    data: pre-check-other.png
+  - op_name: 点击理由输入框
+    op_type: click
+    data: pre-check-reason.png
+  - op_name: 输入理由
+    op_type: input
+    data: "Temporary  release  Temporary  release"
+  - op_name: 点击审批通过
+    op_type: click
+    data: pre-check-approve.png
+
+# 发布流程
+task_approve: &task_approve
+  - operations: *task_idev
+  - op_name: 点击UAT开关
+    op_type: click
+    data: uat-switch.png
+  - operations: *task_check
+  - op_name: 点击PRO开关
+    op_type: click
+    data: pro-switch.png
+  - op_name: 点击PRO发布
+    op_type: click
+    data: pro-release.png
+
+# 发布DevB
+task_publish_b: &task_publish_b
+  - op_name: 点击选择Group
+    op_type: click
+    data: group-select.png
+  - op_name: 输入DevB
+    op_type: input
+    data: dev_b
+  - op_name: 点击DevB
+    op_type: click
+    data: dev_b.png
+  - op_name: 点击下一步
+    op_type: click
+    data: next.png
+  - op_name: 点击新建
+    op_type: click
+    data: new.png
+
+# 发布Test
+task_publish_test: &task_publish_test
+  - op_name: 点击选择Group
+    op_type: click
+    data: group-select.png
+  - op_name: 输入DevB
+    op_type: input
+    data: test
+  - op_name: 点击DevB
+    op_type: click
+    data: test.png
+  - op_name: 点击下一步
+    op_type: click
+    data: next.png
+  - op_name: 点击新建
+    op_type: click
+    data: new.png
