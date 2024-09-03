@@ -54,6 +54,7 @@ task_approve: &task_approve
 
 # 发布DevB
 task_publish_b: &task_publish_b
+  - operations: *task_approve
   - op_name: 点击选择Group
     op_type: click
     data: group-select.png
@@ -72,6 +73,7 @@ task_publish_b: &task_publish_b
 
 # 发布Test
 task_publish_test: &task_publish_test
+  - operations: *task_approve
   - op_name: 点击选择Group
     op_type: click
     data: group-select.png
