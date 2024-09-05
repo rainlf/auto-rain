@@ -9,9 +9,9 @@ def write(data: str) -> bool:
     return True
 
 
-def click(img: str, confidence: float = 0.8) -> bool:
+def click(*img: str, confidence: float = 0.8) -> bool:
     try:
-        image: str = file_utils.get_file_path(img)
+        image: str = file_utils.get_assert_file_path(*img)
         x, y, width, height = pyautogui.locateOnScreen(image, confidence=confidence)
         x, y = pyautogui.center((x, y, width, height))
         pyautogui.click(x, y)

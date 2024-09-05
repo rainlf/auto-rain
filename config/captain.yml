@@ -9,6 +9,7 @@ task_idev: &task_idev
   - op_name: 点击IDev输入框
     op_type: click
     data: idev-input.png
+    confidence: 0.8
     interval: 1
   - op_name: 输入IDev
     op_type: input

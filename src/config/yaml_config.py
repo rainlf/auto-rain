@@ -4,6 +4,7 @@ import yaml
 
 class YamlConfig:
     def __init__(self, file_path: str):
+        print(file_path)
         self.file_path: str = file_path
         self.data: dict = {}
         self.__load_data()

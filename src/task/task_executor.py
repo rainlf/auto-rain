@@ -1,6 +1,7 @@
 import time
 from enum import Enum
 
+import utils.file_utils as file_utils
 import utils.gui_utils as gui_utils
 from config.yaml_config import YamlConfig
 from utils.log_utils import log
@@ -16,8 +17,9 @@ class TaskExecutor:
     初始化配置文件和任务名称
     """
 
-    def __init__(self, config: YamlConfig, task_name: str):
-        self.config = config
+    def __init__(self, module_name: str, task_name: str):
+        self.config = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
+        self.module_name = module_name
         self.task_name = task_name
         if task_name not in self.config.data:
             log.error(f"Task {task_name} not found in config file.")
@@ -47,6 +49,9 @@ class TaskExecutor:
             if self.dispatch_task(task):
                 break
             time.sleep(1)
+        if 'interval' in task:
+            log.info(f"[{task['op_type']}] [{task['op_name']}] completed, sleep {task['interval']} seconds")
+            time.sleep(task['interval'])
 
     def dispatch_task(self, tasks: {}) -> bool:
         """
@@ -71,17 +76,10 @@ class TaskExecutor:
         if 'data' not in task:
             log.error(f"Data not found in task {task}")
             return False
-        return gui_utils.click(task['data'])
-        # return True
+        return gui_utils.click(self.module_name, task['data'], task.get('confidence', 0.8))
 
     def do_input_task(self, task: {}) -> bool:
         if 'data' not in task:
             log.error(f"Data not found in task {task}")
             return False
         return gui_utils.write(task['data'])
-        # return True
-
-
-class GuiOperator:
-    def __init__(self):
-        pass
