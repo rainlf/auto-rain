@@ -39,7 +39,7 @@ task_check: &task_check
     data: pre-check-approve.png
 
 # 发布流程
-task_approve: &task_approve
+task_publish: &task_publish
   - operations: *task_idev
   - op_name: 点击UAT开关
     op_type: click
@@ -54,7 +54,7 @@ task_approve: &task_approve
 
 # 发布DevB
 task_publish_b: &task_publish_b
-  - operations: *task_approve
+  - operations: *task_publish
   - op_name: 点击选择Group
     op_type: click
     data: group-select.png
@@ -73,7 +73,7 @@ task_publish_b: &task_publish_b
 
 # 发布Test
 task_publish_test: &task_publish_test
-  - operations: *task_approve
+  - operations: *task_publish
   - op_name: 点击选择Group
     op_type: click
     data: group-select.png
