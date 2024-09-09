@@ -76,7 +76,7 @@ class TaskExecutor:
         if 'data' not in task:
             log.error(f"Data not found in task {task}")
             return False
-        return gui_utils.click(self.module_name, task['data'], task.get('confidence', 0.8))
+        return gui_utils.click(self.module_name, task['data'], confidence=task.get('confidence', 0.8))
 
     def do_input_task(self, task: {}) -> bool:
         if 'data' not in task:
