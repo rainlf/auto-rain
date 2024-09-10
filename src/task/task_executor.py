@@ -1,5 +1,6 @@
 import time
 from enum import Enum
+from typing import List
 
 import utils.file_utils as file_utils
 import utils.gui_utils as gui_utils
@@ -12,6 +13,25 @@ class OpType(Enum):
     INPUT = 'input'
     CLICK_POSITION = 'click_position'
 
+    @classmethod
+    def from_value(cls, value):
+        for member in cls:
+            if member.value == value:
+                return member
+        raise ValueError(f"No enum member with value '{value}'")
+
+
+class Task:
+    def __init__(self, op_type: OpType, op_name: str, data: str, confidence: float = 0.8, interval: int = 0,
+                 turns: int = 1, operations: List['Task'] = None):
+        self.op_type = op_type
+        self.op_name = op_name
+        self.data = data
+        self.confidence = confidence
+        self.interval = interval
+        self.turns = turns
+        self.operations = operations
+
 
 class TaskExecutor:
     """
@@ -19,13 +39,23 @@ class TaskExecutor:
     """
 
     def __init__(self, module_name: str, task_name: str):
-        self.config = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
-        self.module_name = module_name
-        self.task_name = task_name
-        if task_name not in self.config.data:
-            log.error(f"Task {task_name} not found in config file.")
-            raise Exception(f"Task {task_name} not found in config file.")
-        self.task_list = self.config.data[task_name]
+        self.config: YamlConfig = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
+        self.module_name: str = module_name
+        self.task_name: str = task_name
+        self.__fetch_task_list()
+
+    def __fetch_task_list(self):
+        """
+        获取任务列表
+        :return:
+        """
+        data: {} = self.config.data
+        if self.task_name not in data:
+            log.error(f"Task {self.task_name} not found in config file.")
+            raise Exception(f"Task {self.task_name} not found in config file.")
+        self.task_list: [Task] = [
+            Task(x.get('op_type', None), x.get('op_name', None), x.get('data', None), x.get('float', None),
+                 x.get('interval', None), x.get('turns', None)) for x in data[self.task_name]]
 
     def execute(self):
         """
@@ -102,4 +132,5 @@ class TaskExecutor:
         return gui_utils.write(task['data'])
 
     def do_click_position_task(self, task: {}) -> bool:
-        return gui_utils.click_position(task['data'][0], task['data'][1])
+        position = task['data'].split(',')
+        return gui_utils.click_position(position[0], position[1])
