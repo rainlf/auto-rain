@@ -61,9 +61,9 @@ task_publish_b:
   - op_name: 输入DevB
     op_type: input
     data: dev_b
+    interval: 2.5
   - op_name: 点击DevB
     op_type: click
-    interval: 1
     data: dev_b.png
   - op_name: 点击下一步
     op_type: click
