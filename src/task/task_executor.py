@@ -57,9 +57,16 @@ class TaskExecutor:
         """
         while True:
             log.info(f"[{task['op_type']}] [{task['op_name']}] '{task['data']}'")
-            if self.dispatch_task(task):
-                break
+            if 'turns' in task:
+                for i in range(task['turns']):
+                    log.info(f"[{task['op_type']}] [{task['op_name']}] turn {i + 1}/{task['turns']}")
+                    if self.dispatch_task(task):
+                        break
+            else:
+                if self.dispatch_task(task):
+                    break
             time.sleep(0.3)
+
         if 'interval' in task:
             log.info(f"[{task['op_type']}] [{task['op_name']}] completed, sleep {task['interval']} seconds")
             time.sleep(task['interval'])
