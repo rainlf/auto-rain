@@ -10,6 +10,7 @@ from utils.log_utils import log
 class OpType(Enum):
     CLICK = 'click'
     INPUT = 'input'
+    CLICK_POSITION = 'click_position'
 
 
 class TaskExecutor:
@@ -63,33 +64,35 @@ class TaskExecutor:
             log.info(f"[{task['op_type']}] [{task['op_name']}] completed, sleep {task['interval']} seconds")
             time.sleep(task['interval'])
 
-    def dispatch_task(self, tasks: {}) -> bool:
+    def dispatch_task(self, task: {}) -> bool:
         """
         根据op_type分发任务
-        :param tasks: 一个任务配置对象
+        :param task: 一个任务配置对象
         :return:
         """
-        if 'op_type' not in tasks:
-            log.error(f"Task type not found in task {tasks}")
+        if 'op_type' not in task:
+            log.error(f"Task type not found in task {task}")
+            return False
+        if 'data' not in task:
+            log.error(f"Data not found in task {task}")
             return False
 
-        task_type = tasks['op_type']
+        task_type = task['op_type']
         if task_type == OpType.CLICK.value:
-            return self.do_click_task(tasks)
+            return self.do_click_task(task)
         elif task_type == OpType.INPUT.value:
-            return self.do_input_task(tasks)
+            return self.do_input_task(task)
+        elif task_type == OpType.CLICK_POSITION.value:
+            return self.do_click_position_task(task)
         else:
             log.error(f"Unknown task type {task_type}")
             return False
 
     def do_click_task(self, task: {}) -> bool:
-        if 'data' not in task:
-            log.error(f"Data not found in task {task}")
-            return False
         return gui_utils.click(self.module_name, task['data'], confidence=task.get('confidence', 0.8))
 
     def do_input_task(self, task: {}) -> bool:
-        if 'data' not in task:
-            log.error(f"Data not found in task {task}")
-            return False
         return gui_utils.write(task['data'])
+
+    def do_click_position_task(self, task: {}) -> bool:
+        return gui_utils.click_position(task['data'][0], task['data'][1])
