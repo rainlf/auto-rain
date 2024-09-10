@@ -56,7 +56,7 @@ task_publish: &task_publish
     data: group-select.png
 
 # 发布DevB
-task_publish_b: &task_publish_b
+task_publish_b:
   - operations: *task_publish
   - op_name: 输入DevB
     op_type: input
@@ -72,7 +72,7 @@ task_publish_b: &task_publish_b
     data: new.png
 
 # 发布Test
-task_publish_test: &task_publish_test
+task_publish_test:
   - operations: *task_publish
   - op_name: 输入DevB
     op_type: input

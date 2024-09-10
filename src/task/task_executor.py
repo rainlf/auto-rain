@@ -28,15 +28,25 @@ class TaskExecutor:
 
     def execute(self):
         """
-        开始执行任务
+        执行任务入口
         :return:
         """
         for task in self.task_list:
-            if 'operations' in task:
-                for sub_task in task['operations']:
-                    self.loop_task_until_success(sub_task)
-            else:
-                self.loop_task_until_success(task)
+            self.execute_task(task)
+
+    def execute_task(self, task: {}):
+        """
+        执行单个任务
+        如果任务包含operations字段，则递归执行
+        否则执行loop_task_until_success
+        :param task: 一个任务配置对象
+        :return:
+        """
+        if 'operations' in task:
+            for sub_task in task['operations']:
+                self.execute_task(sub_task)
+        else:
+            self.loop_task_until_success(task)
 
     def loop_task_until_success(self, task: {}) -> None:
         """
@@ -48,7 +58,7 @@ class TaskExecutor:
             log.info(f"[{task['op_type']}] [{task['op_name']}] '{task['data']}'")
             if self.dispatch_task(task):
                 break
-            time.sleep(1)
+            time.sleep(0.3)
         if 'interval' in task:
             log.info(f"[{task['op_type']}] [{task['op_name']}] completed, sleep {task['interval']} seconds")
             time.sleep(task['interval'])

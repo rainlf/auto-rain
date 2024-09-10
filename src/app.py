@@ -1,8 +1,12 @@
 from task.task_executor import TaskExecutor
-from utils.log_utils import log
 
 
 module = 'captain'
-task: TaskExecutor = TaskExecutor(module, 'task_publish')
-log.info("-----------------")
+# task: TaskExecutor = TaskExecutor(module, 'task_publish')
+task: TaskExecutor = TaskExecutor(module, 'task_publish_b')
 task.execute()
+#
+# module = 'qconfig'
+# task: TaskExecutor = TaskExecutor(module, 'publish')
+# task.execute()
+
