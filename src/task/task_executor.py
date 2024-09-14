@@ -1,9 +1,9 @@
 import time
-from typing import List
 
 import utils.file_utils as file_utils
 import utils.gui_utils as gui_utils
 from config.yaml_config import YamlConfig
+from task.task import *
 from utils.log_utils import log
 
 
@@ -13,7 +13,6 @@ class TaskExecutor:
     """
 
     def __init__(self, module_name: str, task_name: str):
-        self.config: YamlConfig = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
         self.module_name: str = module_name
         self.task_name: str = task_name
         self.task_list: List[Task] = self.__build_task_list()
@@ -23,54 +22,16 @@ class TaskExecutor:
         构建任务列表
         :return:
         """
+
         # 读取配置文件
-        data: {} = self.config.data
-        if self.task_name not in data:
+        yaml_config: YamlConfig = YamlConfig(file_utils.get_config_file_path(f'{self.module_name}.yml'))
+        module_data: {} = yaml_config.data
+        if self.task_name not in module_data:
             log.error(f"Task {self.task_name} not found in config file.")
             raise Exception(f"Task {self.task_name} not found in config file.")
 
         # 读取任务列表
-        return self.__build_task_list_inner(data[self.task_name])
-
-    def __build_task_list_inner(self, task_data: []) -> List[Task]:
-        """
-        递归构建任务列表
-        :param task_data: 当前任务列表
-        :return: 任务树
-        """
-        if (task_data is None) or (len(task_data) == 0):
-            return []
-        ret: List[Task] = []
-        for task in task_data:
-            op_type = task.get(Task.OP_TYPE, None)
-            op_name = task.get(Task.OP_NAME, None)
-            data = task.get(Task.DATA, None)
-            confidence = task.get(Task.CONFIDENCE, None)
-            interval = task.get(Task.INTERVAL, None)
-            turns = task.get(Task.TURNS, None)
-            operations = task.get(Task.OPERATIONS, None)
-            ret.append(
-                Task(op_type, op_name, data, confidence, interval, turns, self.__build_task_list_inner(operations)))
-        return ret
-
-    def print_task_list(self):
-        """
-        打印任务列表
-        :return:
-        """
-        self.print_task(self.task_list)
-
-    def print_task(self, task_list: List[Task]):
-        """
-        递归打印任务
-        :param task_list: 任务列表
-        :return:
-        """
-        for task in task_list:
-            if task.has_operations:
-                self.print_task(task.operations)
-            else:
-                log.info(f"Task: {task.op_type} {task.op_name} {task.data}")
+        return build_task_tree(module_data[self.task_name])
 
     def execute(self):
         """
@@ -130,7 +91,7 @@ class TaskExecutor:
             return False
 
         task_type = task['op_type']
-        if task_type == OpType.CLICK.value:
+        if task_type == OpType.CLICK_IMG.value:
             return self.do_click_task(task)
         elif task_type == OpType.INPUT.value:
             return self.do_input_task(task)

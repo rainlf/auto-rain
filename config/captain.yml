@@ -6,84 +6,95 @@ desc: |
 
 # 关联IDev
 task_idev: &task_idev
-  - op_name: 点击IDev输入框
-    op_type: click
-    data: idev-input.png
-    confidence: 0.8
-    interval: 1
-  - op_name: 输入IDev
-    op_type: input
+  - name: 点击IDev输入框
+    type: click_img
+    data:
+      value: idev-input.png
+      confidence: 0.8
+  - name: 输入IDev
+    type: input
     data: "3760646"
-  - op_name: 点击IDev记录
-    op_type: click
+  - name: 点击IDev记录
+    type: click_img
     data: idev-record.png
 
 # 前置检查
 task_check: &task_check
-  - op_name: 点击原因输入框
-    op_type: click
+  - name: 点击原因输入框
+    type: click_img
     data: pre-check.png
-  - op_name: 点击其他选项
-    op_type: click
+  - name: 点击其他选项
+    type: click_img
     data: pre-check-other.png
-  - op_name: 点击理由输入框
-    op_type: click
+  - name: 点击理由输入框
+    type: click_img
     data: pre-check-reason.png
-  - op_name: 输入理由
-    op_type: input
+  - name: 输入理由
+    type: input
     data: "Temporary  release  Temporary  release "
-  - op_name: 点击审批通过
-    op_type: click
-    data: pre-check-approve.png
-    confidence: 0.9
+  - name: 点击审批通过
+    type: click_img
+    data:
+      value: pre-check-approve.png
+      confidence: 0.9
 
 # 发布流程
 task_publish: &task_publish
-  - operations: *task_idev
-  - op_name: 点击UAT开关
-    op_type: click
+  - name: 关联IDev
+    type: operation
+    operations: *task_idev
+  - name: 点击UAT开关
+    type: click_img
     data: uat-switch.png
-  - operations: *task_check
-  - op_name: 点击PRO开关
-    op_type: click
+  - name: 前置检查
+    type: operation
+    operations: *task_check
+  - name: 点击PRO开关
+    type: click_img
     data: pro-switch.png
-  - operations: *task_check
-  - op_name: 点击PRO发布
-    op_type: click
+  - name: 前置检查
+    type: operation
+    operations: *task_check
+  - name: 点击PRO发布
+    type: click_img
     data: pro-release.png
-  - op_name: 点击选择Group
-    op_type: click
+  - name: 点击选择Group
+    type: click_img
     data: group-select.png
 
 # 发布DevB
 task_publish_b:
-  - operations: *task_publish
-  - op_name: 输入DevB
-    op_type: input
+  - name: 发布流程
+    type: operation
+    operations: *task_publish
+  - name: 输入DevB
+    type: input
     data: dev_b
     interval: 2.5
-  - op_name: 点击DevB
-    op_type: click
+  - name: 点击DevB
+    type: click_img
     data: dev_b.png
-  - op_name: 点击下一步
-    op_type: click
+  - name: 点击下一步
+    type: click_img
     data: next.png
-  - op_name: 点击新建
-    op_type: click
+  - name: 点击新建
+    type: click_img
     data: new.png
 
 # 发布Test
 task_publish_test:
-  - operations: *task_publish
-  - op_name: 输入DevB
-    op_type: input
+  - name: 发布流程
+    type: operation
+    operations: *task_publish
+  - name: 输入DevB
+    type: input
     data: test
-  - op_name: 点击DevB
-    op_type: click
+  - name: 点击DevB
+    type: click_img
     data: test.png
-  - op_name: 点击下一步
-    op_type: click
+  - name: 点击下一步
+    type: click_img
     data: next.png
-  - op_name: 点击新建
-    op_type: click
+  - name: 点击新建
+    type: click_img
     data: new.png
