@@ -9,6 +9,9 @@ from utils.log_utils import log
 
 
 class OpType(Enum):
+    """
+    任务类型枚举
+    """
     CLICK = 'click'
     INPUT = 'input'
     CLICK_POSITION = 'click_position'
@@ -22,6 +25,20 @@ class OpType(Enum):
 
 
 class Task:
+    """
+    任务对象，对应yaml配置文件中的一个任务
+    """
+
+    # yaml 可配置属性
+    OP_TYPE = 'op_type'
+    OP_NAME = 'op_name'
+    DATA = 'data'
+    CONFIDENCE = 'confidence'
+    INTERVAL = 'interval'
+    TURNS = 'turns'
+    OPERATIONS = 'operations'
+
+    # 构造Task对象
     def __init__(self, op_type: OpType, op_name: str, data: str, confidence: float = 0.8, interval: int = 0,
                  turns: int = 1, operations: List['Task'] = None):
         self.op_type = op_type
@@ -30,6 +47,7 @@ class Task:
         self.confidence = confidence
         self.interval = interval
         self.turns = turns
+        # 子任务list
         self.operations = operations
 
 
@@ -37,25 +55,46 @@ class TaskExecutor:
     """
     初始化配置文件和任务名称
     """
-
     def __init__(self, module_name: str, task_name: str):
         self.config: YamlConfig = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
         self.module_name: str = module_name
         self.task_name: str = task_name
-        self.__fetch_task_list()
+        self.task_list: List[Task] = self.__build_task_list()
 
-    def __fetch_task_list(self):
+    def __build_task_list(self) -> List[Task]:
         """
-        获取任务列表
+        构建任务列表
         :return:
         """
+        # 读取配置文件
         data: {} = self.config.data
         if self.task_name not in data:
             log.error(f"Task {self.task_name} not found in config file.")
             raise Exception(f"Task {self.task_name} not found in config file.")
-        self.task_list: [Task] = [
-            Task(x.get('op_type', None), x.get('op_name', None), x.get('data', None), x.get('float', None),
-                 x.get('interval', None), x.get('turns', None)) for x in data[self.task_name]]
+
+        # 读取任务列表
+        return self.__build_task_list_inner(data[self.task_name])
+
+    def __build_task_list_inner(self, task_data: []) -> List[Task]:
+        """
+        递归构建任务列表
+        :param task_data: 当前任务列表
+        :return: 任务树
+        """
+        if (task_data is None) or (len(task_data) == 0):
+            return []
+        ret: List[Task] = []
+        for task in task_data:
+            op_type = task.get(Task.OP_TYPE, None)
+            op_name = task.get(Task.OP_NAME, None)
+            data = task.get(Task.DATA, None)
+            confidence = task.get(Task.CONFIDENCE, None)
+            interval = task.get(Task.INTERVAL, None)
+            turns = task.get(Task.TURNS, None)
+            operations = task.get(Task.OPERATIONS, None)
+            ret.append(
+                Task(op_type, op_name, data, confidence, interval, turns, self.__build_task_list_inner(operations)))
+        return ret
 
     def execute(self):
         """
