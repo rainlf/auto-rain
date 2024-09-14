@@ -1,5 +1,4 @@
 import time
-from enum import Enum
 from typing import List
 
 import utils.file_utils as file_utils
@@ -8,53 +7,11 @@ from config.yaml_config import YamlConfig
 from utils.log_utils import log
 
 
-class OpType(Enum):
-    """
-    任务类型枚举
-    """
-    CLICK = 'click'
-    INPUT = 'input'
-    CLICK_POSITION = 'click_position'
-
-    @classmethod
-    def from_value(cls, value):
-        for member in cls:
-            if member.value == value:
-                return member
-        raise ValueError(f"No enum member with value '{value}'")
-
-
-class Task:
-    """
-    任务对象，对应yaml配置文件中的一个任务
-    """
-
-    # yaml 可配置属性
-    OP_TYPE = 'op_type'
-    OP_NAME = 'op_name'
-    DATA = 'data'
-    CONFIDENCE = 'confidence'
-    INTERVAL = 'interval'
-    TURNS = 'turns'
-    OPERATIONS = 'operations'
-
-    # 构造Task对象
-    def __init__(self, op_type: OpType, op_name: str, data: str, confidence: float = 0.8, interval: int = 0,
-                 turns: int = 1, operations: List['Task'] = None):
-        self.op_type = op_type
-        self.op_name = op_name
-        self.data = data
-        self.confidence = confidence
-        self.interval = interval
-        self.turns = turns
-        # 子任务list
-        self.operations = operations
-
-
 class TaskExecutor:
     """
     初始化配置文件和任务名称
     """
+
     def __init__(self, module_name: str, task_name: str):
         self.config: YamlConfig = YamlConfig(file_utils.get_config_file_path(f'{module_name}.yml'))
         self.module_name: str = module_name
@@ -95,6 +52,25 @@ class TaskExecutor:
             ret.append(
                 Task(op_type, op_name, data, confidence, interval, turns, self.__build_task_list_inner(operations)))
         return ret
+
+    def print_task_list(self):
+        """
+        打印任务列表
+        :return:
+        """
+        self.print_task(self.task_list)
+
+    def print_task(self, task_list: List[Task]):
+        """
+        递归打印任务
+        :param task_list: 任务列表
+        :return:
+        """
+        for task in task_list:
+            if task.has_operations:
+                self.print_task(task.operations)
+            else:
+                log.info(f"Task: {task.op_type} {task.op_name} {task.data}")
 
     def execute(self):
         """

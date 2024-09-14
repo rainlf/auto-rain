@@ -4,3 +4,17 @@ desc: |
   2. 发布
   
 
+# 关联IDev
+task_idev: &task_idev
+  - op_name: 点击IDev输入框
+    op_type: click
+    data:
+      path: idev-input.png
+      confidence: 0.8
+    interval: 1
+  - op_name: 输入IDev
+    op_type: input
+    data: "3760646"
+  - op_name: 点击IDev记录
+    op_type: click
+    data: idev-record.png

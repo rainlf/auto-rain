@@ -1,41 +1,28 @@
-# IMG = '../assert/captain/uat-switch.png'
-#
-# x, y, width, height = pyautogui.locateOnScreen(IMG, confidence=0.8)
-# x, y = pyautogui.center((x, y, width, height))
-# pyautogui.moveTo(x, y, duration=0.3)
-# print(x, y)
-#
+from typing import Union
 
+def process_data(data: Union[int, str, list]) -> None:
+    if isinstance(data, int):
+        print(f"处理整数: {data}")
+    elif isinstance(data, str):
+        print(f"处理字符串: {data}")
+    elif isinstance(data, list):
+        print(f"处理列表: {data}")
 
+# 或者使用管道符号（Python 3.10+）
+def process_data_v2(data: int | str | list) -> None:
+    if isinstance(data, int):
+        print(f"处理整数: {data}")
+    elif isinstance(data, str):
+        print(f"处理字符串: {data}")
+    elif isinstance(data, list):
+        print(f"处理列表: {data}")
 
-class MyClass:
-    # 这是一个静态变量
-    static_var = "我是静态变量"
+# 测试函数
+process_data(42)
+process_data("Hello")
+process_data([1, 2, 3])
 
-    def __init__(self):
-        pass
+process_data_v2(42)
+process_data_v2("Hello")
+process_data_v2([1, '1234', 3])
 
-    def print_static_var(self):
-        # 在类的方法中访问静态变量
-        print(MyClass.static_var)
-
-
-# 创建 MyClass 的两个实例
-instance1 = MyClass()
-instance2 = MyClass()
-
-
-# 访问静态变量
-print(instance1.static_var)  # 输出: 我是静态变量
-instance1.print_static_var()  # 输出: 我是静态变量
-
-# 更改静态变量
-MyClass.static_var = "我被修改了"
-print(instance1.static_var)  # 输出: 我被修改了
-instance1.print_static_var()  # 输出: 我被修改了
-
-
-# 通过实例也可以修改静态变量，但这通常不是推荐的做法
-instance1.static_var = "我不推荐这样做"
-print(MyClass.static_var)  # 输出: 我被修改了 (注意这里没有变)
-print(instance1.static_var)  # 输出: 我不推荐这样做 (instance1现在指向了一个实例属性)
