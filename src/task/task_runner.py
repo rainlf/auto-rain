@@ -1,4 +1,7 @@
+import time
+
 from loguru import logger as log
+
 from task.task import Task, TaskType
 from utils import file_utils, yaml_utils
 
@@ -8,6 +11,7 @@ class TaskRunner:
         self._module = module
         self._mission = mission
         self.tasks = self.__load_config()
+        self.default_sleep = 0.3
 
     def __load_config(self):
         file = file_utils.get_config(self._module)
@@ -23,4 +27,12 @@ class TaskRunner:
 
     def dry_run(self):
         for task in self.tasks:
+            task.dry_run()
+
+    def run(self):
+        for i in range(len(self.tasks)):
+            task = self.tasks[i]
             log.info(f"task: {task}")
+            if task.run():
+                i += 1
+            time.sleep(self.default_sleep)
