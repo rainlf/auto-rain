@@ -1,4 +1,3 @@
-from loguru import logger as log
 from task.task_runner import TaskRunner
 
 module = 'infosafe'
