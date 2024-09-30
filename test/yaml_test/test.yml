@@ -1,0 +1,73 @@
+# 文档分隔符
+---
+# 纯量
+scalar:
+  null: ~
+  bool: true
+  int: 123
+  float: 123.456
+  date: 2024-10-24
+  datetime: 2024-10-24T08:00:00+08:00
+# 列表
+seq:
+  - a
+  - b
+  - c
+# 对象
+map:
+  name: rain
+  age: 22
+# 内联
+inline:
+  sequence: ["a", "b", "c"]
+  mapping: { name: rain, age: 22 }
+# 类型强转
+casting:
+  date: !!str 2024-10-24
+  number: !!str 123.456
+# 字符串
+string:
+  # 默认字符串
+  value: this is a string
+  # 单引号对特殊字符转义
+  value2: 'this is a string\n hello world'
+  value3: "this is a string\n hello world"
+  # 双引号对特殊字符不转义
+# 多行字符串
+multiLine:
+  # 保留换行符
+  value: |
+    this is first line
+    this is second line
+  # 保留末尾换行
+  value2: |+
+    this is first line
+    this is second line
+  # 删除末尾换行
+  value3: |-
+    this is first line
+    this is second line
+  # 折叠换行
+  value4: >
+    this is first line
+    this is second line
+# 变量
+params:
+  name: rain
+  name2: ${params.name}
+# 引用
+anchors:
+  config: &config
+    name: rain
+    age: 22
+  userConfig:
+    <<: *config
+    defaultConfig: *config
+  configList:
+    - &item1 a
+    - &item2 b
+  userConfigList:
+    - *item1
+    - *item2
+    - c
+    - d

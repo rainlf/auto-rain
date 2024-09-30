@@ -9,8 +9,7 @@ import time
 import keyboard
 import pyautogui
 
-
-running = False
+running = True
 
 
 def listen_start():
@@ -22,17 +21,18 @@ def listen_start():
 def listen_stop():
     global running
     keyboard.wait('F10')
+    print("F10 pressed, stopped process")
     running = False
 
 
 def main():
-    start = threading.Thread(target=listen_start)
+    # start = threading.Thread(target=listen_start)
     stop = threading.Thread(target=listen_stop)
-    start.start()
+    # start.start()
     stop.start()
 
-    print("Press F9 to start")
-    start.join()
+    # print("Press F9 to start")
+    # start.join()
     print("Process started, Press 10 to stop")
     while running:
         pyautogui.click(200, 200)

@@ -1,0 +1,35 @@
+desc: |
+  自动信安会话审批
+
+pre_process: &pre_process
+  A01:
+    name: 打开网址
+    type: open_url
+    data: http://jumpserver.audit.infosec.ctripcorp.com/#/mysession
+  A02:
+    name: 点击处理
+    type: click_text
+    data: 处理
+
+mission:
+  <<: *pre_process
+  B01:
+    name: 点击请选择
+    type: click_text
+    data: 请选择
+  B02:
+    name: 点击查看/检查
+    type: click_text
+    data: 查看/检查
+  B03:
+    name: 点击请输入
+    type: click_text
+    data: 请输入
+  B04:
+    name: 输入内容
+    type: input
+    data: OPS
+  B05:
+    name: 点击提交
+    type: click_text
+    data: 提交

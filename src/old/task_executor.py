@@ -1,9 +1,9 @@
 import time
 
 import utils.file_utils as file_utils
-import utils.gui_utils as gui_utils
-from config.yaml_config import YamlConfig
-from task.task import *
+import old.gui_utils as gui_utils
+from old.yaml_config import YamlConfig
+from old.task import *
 from utils.log_utils import log
 
 

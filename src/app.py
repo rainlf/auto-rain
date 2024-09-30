@@ -1,17 +1,9 @@
-from task.task_executor import TaskExecutor
-from config.yaml_config import YamlConfig
-import utils.file_utils as file_utils
-from task.task import *
+from loguru import logger as log
+from task.task_runner import TaskRunner
 
-module = 'captain'
-# task: TaskExecutor = TaskExecutor(module, 'task_publish')
-task: TaskExecutor = TaskExecutor(module, 'task_publish_b')
-
-# task.execute()
-#
-# module = 'qconfig'
-# task: TaskExecutor = TaskExecutor(module, 'publish')
-# task.execute()
+module = 'infosafe'
+mission = 'session_handle'
 
 
-print_task_tree(task.task_list)
+task_runner = TaskRunner(module, mission)
+task_runner.dry_run()

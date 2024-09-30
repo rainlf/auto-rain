@@ -1,10 +1,6 @@
 desc: |
   Qconfig 自动发布
-  1. 审批
-  2. 发布
-  
 
-# 关联IDev
 task_idev: &task_idev
   - op_name: 点击IDev输入框
     op_type: click
