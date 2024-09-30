@@ -15,7 +15,7 @@ class TaskRunner:
 
     def __load_config(self):
         file = file_utils.get_config(self._module)
-        log.debug(f"config file: {file}")
+        log.info(f"config file: {file}")
         config = yaml_utils.load_yaml(file)
         mission = config[self._mission]
         tasks = []
@@ -32,7 +32,6 @@ class TaskRunner:
     def run(self):
         for i in range(len(self.tasks)):
             task = self.tasks[i]
-            log.info(f"task: {task}")
             if task.run():
                 i += 1
             time.sleep(self.default_sleep)

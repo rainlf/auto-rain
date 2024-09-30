@@ -11,8 +11,7 @@ pre_process: &pre_process
     type: CLICK_TEXT
     data: 处理
 
-session_handle:
-  <<: *pre_process
+handle_process: &handle_process
   B01:
     name: 点击请选择
     type: CLICK_TEXT
@@ -33,3 +32,7 @@ session_handle:
     name: 点击提交
     type: CLICK_TEXT
     data: 提交
+
+handle_20:
+  <<: *pre_process
+  <<: *handle_process
