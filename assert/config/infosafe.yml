@@ -6,6 +6,8 @@ pre_process: &pre_process
     name: 打开网址
     type: OPEN_URL
     data: http://jumpserver.audit.infosec.ctripcorp.com/#/mysession
+    config:
+      sleep: 5
   A02:
     name: 点击处理
     type: CLICK_TEXT

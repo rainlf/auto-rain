@@ -3,6 +3,12 @@ import webbrowser
 
 import pyautogui
 import pyperclip
+from cnocr import CnOcr
+
+ocr = CnOcr(
+    det_model_name='ch_PP-OCRv3_det',
+    rec_model_name='densenet_lite_136-gru',
+)
 
 
 def open_url(url: str):
@@ -31,7 +37,17 @@ def click(x: int, y: int):
 
 
 def click_text(text: str):
-    pass
+    screenshot = pyautogui.screenshot()
+    out = ocr.ocr(screenshot)
+    for line in out:
+        content = line['text']
+        if text == content:
+            x = line['position'][0][0]
+            y = line['position'][0][1]
+            width = line['position'][1][0] - x
+            height = line['position'][3][1] - y
+            x, y = pyautogui.center(x, y, width, height)
+            pyautogui.click(x, y)
 
 
 def click_img(img: str, confidence: float = 0.8):
