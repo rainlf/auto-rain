@@ -48,6 +48,8 @@ def click_text(text: str):
             height = line['position'][3][1] - y
             x, y = pyautogui.center(x, y, width, height)
             pyautogui.click(x, y)
+            return
+    raise Exception(f"未找到文本: {text}")
 
 
 def click_img(img: str, confidence: float = 0.8):
