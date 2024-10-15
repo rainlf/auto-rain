@@ -42,11 +42,8 @@ def click_text(text: str):
     for line in out:
         content = line['text']
         if text == content:
-            x = line['position'][0][0]
-            y = line['position'][0][1]
-            width = line['position'][1][0] - x
-            height = line['position'][3][1] - y
-            x, y = pyautogui.center(x, y, width, height)
+            x = (line['position'][0][0] + line['position'][1][0]) / 2
+            y = (line['position'][0][1] + line['position'][3][1]) / 2
             pyautogui.click(x, y)
             return
     raise Exception(f"未找到文本: {text}")
@@ -54,5 +51,6 @@ def click_text(text: str):
 
 def click_img(img: str, confidence: float = 0.8):
     x, y, width, height = pyautogui.locateOnScreen(img, confidence=confidence)
-    x, y = pyautogui.center(x, y, width, height)
-    pyautogui.click(x, y)
+    center_x = x + (width / 2)
+    center_y = y + (height / 2)
+    pyautogui.click(center_x, center_y)

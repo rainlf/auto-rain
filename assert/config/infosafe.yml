@@ -6,8 +6,6 @@ pre_process: &pre_process
     name: 打开网址
     type: OPEN_URL
     data: http://jumpserver.audit.infosec.ctripcorp.com/#/mysession
-    config:
-      sleep: 5
   A02:
     name: 点击处理
     type: CLICK_TEXT
@@ -16,16 +14,16 @@ pre_process: &pre_process
 handle_process: &handle_process
   B01:
     name: 点击请选择
-    type: CLICK_TEXT
-    data: 请选择
+    type: CLICK_IMG
+    data: select.png
   B02:
     name: 点击查看/检查
-    type: CLICK_TEXT
-    data: 查看/检查
+    type: CLICK_IMG
+    data: check.png
   B03:
     name: 点击请输入
-    type: CLICK_TEXT
-    data: 请输入
+    type: CLICK_IMG
+    data: input.png
   B04:
     name: 输入内容
     type: KEYBOARD_INPUT
@@ -35,6 +33,6 @@ handle_process: &handle_process
     type: CLICK_TEXT
     data: 提交
 
-handle_20:
-  <<: *pre_process
+handles:
+  <<: *handle_process
   <<: *handle_process

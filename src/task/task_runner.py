@@ -21,8 +21,7 @@ class TaskRunner:
         tasks = []
         for step in mission:
             data = mission[step]
-            tasks.append(Task(step, data['name'], TaskType[data['type']], data['data'], data.get('config')))
-
+            tasks.append(Task(self._module, step, data['name'], TaskType[data['type']], data['data'], data.get('config')))
         return tasks
 
     def dry_run(self):
@@ -30,7 +29,8 @@ class TaskRunner:
             task.dry_run()
 
     def run(self):
-        for i in range(len(self.tasks)):
+        i = 0
+        while i < len(self.tasks):
             task = self.tasks[i]
             if task.run():
                 i += 1

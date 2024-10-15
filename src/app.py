@@ -1,7 +1,7 @@
 from task.task_runner import TaskRunner
 
 module = 'infosafe'
-mission = 'handle_20'
+mission = 'handles'
 
 task_runner = TaskRunner(module, mission)
-task_runner.run()
+task_runner.dry_run()

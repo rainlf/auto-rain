@@ -4,6 +4,7 @@ from typing import Dict
 
 from loguru import logger as log
 
+from utils import file_utils
 from utils import gui_utils
 
 
@@ -15,7 +16,8 @@ class TaskType(Enum):
 
 
 class Task:
-    def __init__(self, step: str, name: str, type: TaskType, data: str, config: Dict):
+    def __init__(self, module: str, step: str, name: str, type: TaskType, data: str, config: Dict):
+        self._module = module
         self._step = step
         self._name = name
         self._type = type
@@ -36,7 +38,7 @@ class Task:
             if self._type == TaskType.OPEN_URL:
                 gui_utils.open_url(self._data)
             elif self._type == TaskType.CLICK_IMG:
-                gui_utils.click_img(self._data, self._config.get('confidence', 0.8))
+                gui_utils.click_img(file_utils.get_img(self._module, self._data), self._config.get('confidence', 0.8))
             elif self._type == TaskType.CLICK_TEXT:
                 gui_utils.click_text(self._data)
             elif self._type == TaskType.KEYBOARD_INPUT:
