@@ -13,6 +13,7 @@ class TaskType(Enum):
     CLICK_IMG = auto()
     CLICK_TEXT = auto()
     KEYBOARD_INPUT = auto()
+    SUB_TASKS = auto()
 
 
 class Task:
@@ -31,6 +32,10 @@ class Task:
         log.info(f"task: {self}")
 
     def run(self) -> bool:
+        """
+        任务执行实现，根据不同的任务类型执行具体的操作
+        :return: 是否执行成功
+        """
         log.info(f"task: {self}")
         if self._config is None:
             self._config = {}
@@ -43,6 +48,8 @@ class Task:
                 gui_utils.click_text(self._data)
             elif self._type == TaskType.KEYBOARD_INPUT:
                 gui_utils.write(self._data)
+            elif self._type == TaskType.SUB_TASKS:
+                self.handle_sub_tasks(self._data, self._config.get('times', 1))
             else:
                 log.error(f"unknown task type: {self._type}")
 
@@ -52,3 +59,7 @@ class Task:
             return False
 
         return True
+
+    def handle_sub_tasks(self, tasks, times):
+        log.info(f"TEST:: handle_sub_tasks: {tasks}, times: {times}")
+        pass

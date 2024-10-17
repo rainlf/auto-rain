@@ -29,6 +29,9 @@ class TaskRunner:
             task.dry_run()
 
     def run(self):
+        """
+        按序执行任务，任务执行失败时继续执行本次任务，直到成功
+        """
         i = 0
         while i < len(self.tasks):
             task = self.tasks[i]

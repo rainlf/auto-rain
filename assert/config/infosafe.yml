@@ -35,4 +35,10 @@ handle_process: &handle_process
 
 handles:
   <<: *handle_process
-  <<: *handle_process
+  C01:
+    name: 子任务集合
+    type: SUB_TASKS
+    data: *handle_process
+    config:
+      times: 20
+
