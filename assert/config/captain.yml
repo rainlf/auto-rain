@@ -6,7 +6,7 @@ task_idev: &task_idev
   A01:
     name: 点击IDev输入框
     type: CLICK_IMG
-    data: idev-KEYBOARD_INPUT.png
+    data: idev-input.png
   A02:
     name: 输入IDev
     type: KEYBOARD_INPUT

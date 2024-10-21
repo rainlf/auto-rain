@@ -26,7 +26,8 @@ class Task:
         self._config = config
         if self._config is None:
             self._config = {}
-        self._sleep = self._config.get('sleep', 0.3)
+        self._default_sleep = 0.5
+        self._sleep = self._config.get('sleep', self._default_sleep)
 
     def __str__(self):
         return f"step: {self._step}, name: {self._name}, type: {self._type}, data: {self._data}, config: {self._config}"
