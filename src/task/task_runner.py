@@ -1,8 +1,6 @@
-import time
-
 from loguru import logger as log
 
-from task.task import Task, TaskType
+from task.task import Task, build_tasks_from_missions
 from utils import file_utils, yaml_utils
 
 
@@ -11,18 +9,17 @@ class TaskRunner:
         self._module = module
         self._mission = mission
         self.tasks = self.__load_config()
-        self.default_sleep = 0.3
 
-    def __load_config(self):
+    def __load_config(self) -> list[Task]:
+        """
+        根据配置的missions构建执行任务需要的tasks
+        :return:
+        """
         file = file_utils.get_config(self._module)
         log.info(f"config file: {file}")
         config = yaml_utils.load_yaml(file)
         mission = config[self._mission]
-        tasks = []
-        for step in mission:
-            data = mission[step]
-            tasks.append(Task(self._module, step, data['name'], TaskType[data['type']], data['data'], data.get('config')))
-        return tasks
+        return build_tasks_from_missions(self._module, mission)
 
     def dry_run(self):
         for task in self.tasks:
@@ -37,4 +34,3 @@ class TaskRunner:
             task = self.tasks[i]
             if task.run():
                 i += 1
-            time.sleep(self.default_sleep)

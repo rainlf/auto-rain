@@ -4,4 +4,4 @@ module = 'infosafe'
 mission = 'handles'
 
 task_runner = TaskRunner(module, mission)
-task_runner.dry_run()
+task_runner.run()
