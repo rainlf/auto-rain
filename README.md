@@ -25,6 +25,12 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
+运行
+```shell
+cd app
+python xxx.py
+```
+
 导出依赖
 ```shell
 pip freeze > requirements.txt
