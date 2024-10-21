@@ -80,6 +80,8 @@ task_publish_b:
     name: 输入DevB
     type: KEYBOARD_INPUT
     data: dev_b
+    config:
+      sleep: 1.5
   D03: 
     name: 点击DevB
     type: CLICK_IMG
@@ -103,6 +105,8 @@ task_publish_test:
     name: 输入DevB
     type: KEYBOARD_INPUT
     data: test
+    config:
+      sleep: 1.5
   E03:
     name: 点击DevB
     type: CLICK_IMG
