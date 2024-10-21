@@ -1,100 +1,117 @@
 desc: |
   Captain 自动发布
-  1. 发布流程（手动选择目标环境）
-  2. 发布DevB
-  3. 发布Test
 
 # 关联IDev
 task_idev: &task_idev
-  - name: 点击IDev输入框
-    type: click_img
-    data:
-      value: idev-input.png
-      confidence: 0.8
-  - name: 输入IDev
-    type: input
+  A01:
+    name: 点击IDev输入框
+    type: CLICK_IMG
+    data: idev-KEYBOARD_INPUT.png
+  A02:
+    name: 输入IDev
+    type: KEYBOARD_INPUT
     data: "3760646"
-  - name: 点击IDev记录
-    type: click_img
+  A03:
+    name: 点击IDev记录
+    type: CLICK_IMG
     data: idev-record.png
 
 # 前置检查
 task_check: &task_check
-  - name: 点击原因输入框
-    type: click_img
+  B01:
+    name: 点击原因输入框
+    type: CLICK_IMG
     data: pre-check.png
-  - name: 点击其他选项
-    type: click_img
+  B02:
+    name: 点击其他选项
+    type: CLICK_IMG
     data: pre-check-other.png
-  - name: 点击理由输入框
-    type: click_img
+  B03:
+    name: 点击理由输入框
+    type: CLICK_IMG
     data: pre-check-reason.png
-  - name: 输入理由
-    type: input
+  B04:
+    name: 输入理由
+    type: KEYBOARD_INPUT
     data: "Temporary  release  Temporary  release "
-  - name: 点击审批通过
-    type: click_img
-    data:
-      value: pre-check-approve.png
-      confidence: 0.9
+  B05:
+    name: 点击审批通过
+    type: CLICK_IMG
+    data: pre-check-approve.png
 
 # 发布流程
 task_publish: &task_publish
-  - name: 关联IDev
+  C01:
+    name: 关联IDev
     type: operation
     operations: *task_idev
-  - name: 点击UAT开关
-    type: click_img
+  C02:
+    name: 点击UAT开关
+    type: CLICK_IMG
     data: uat-switch.png
-  - name: 前置检查
+  C03:
+    name: 前置检查
     type: operation
     operations: *task_check
-  - name: 点击PRO开关
-    type: click_img
+  C04:
+    name: 点击PRO开关
+    type: CLICK_IMG
     data: pro-switch.png
-  - name: 前置检查
+  C05:
+    name: 前置检查
     type: operation
     operations: *task_check
-  - name: 点击PRO发布
-    type: click_img
+  C06:
+    name: 点击PRO发布
+    type: CLICK_IMG
     data: pro-release.png
-  - name: 点击选择Group
-    type: click_img
+  C07:
+    name: 点击选择Group
+    type: CLICK_IMG
     data: group-select.png
 
 # 发布DevB
 task_publish_b:
-  - name: 发布流程
+  D01:
+    name: 发布流程
     type: operation
     operations: *task_publish
-  - name: 输入DevB
-    type: input
+  D02:
+    name: 输入DevB
+    type: KEYBOARD_INPUT
     data: dev_b
-    interval: 2.5
-  - name: 点击DevB
-    type: click_img
+  D03: 
+    name: 点击DevB
+    type: CLICK_IMG
     data: dev_b.png
-  - name: 点击下一步
-    type: click_img
+  D04:
+    name: 点击下一步
+    type: CLICK_IMG
     data: next.png
-  - name: 点击新建
-    type: click_img
+  D05:
+    name: 点击新建
+    type: CLICK_IMG
     data: new.png
 
 # 发布Test
 task_publish_test:
-  - name: 发布流程
+  E01:
+    name: 发布流程
     type: operation
     operations: *task_publish
-  - name: 输入DevB
-    type: input
+  E02:
+    name: 输入DevB
+    type: KEYBOARD_INPUT
     data: test
-  - name: 点击DevB
-    type: click_img
+  E03:
+    name: 点击DevB
+    type: CLICK_IMG
     data: test.png
-  - name: 点击下一步
-    type: click_img
+  E04:
+    name: 点击下一步
+    type: CLICK_IMG
     data: next.png
-  - name: 点击新建
-    type: click_img
+  E05:
+    name: 点击新建
+    type: CLICK_IMG
     data: new.png
