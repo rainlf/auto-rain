@@ -43,24 +43,24 @@ task_check: &task_check
 task_publish: &task_publish
   C01:
     name: 关联IDev
-    type: operation
-    operations: *task_idev
+    type: SUB_MISSIONS
+    data: *task_idev
   C02:
     name: 点击UAT开关
     type: CLICK_IMG
     data: uat-switch.png
   C03:
     name: 前置检查
-    type: operation
-    operations: *task_check
+    type: SUB_MISSIONS
+    data: *task_check
   C04:
     name: 点击PRO开关
     type: CLICK_IMG
     data: pro-switch.png
   C05:
     name: 前置检查
-    type: operation
-    operations: *task_check
+    type: SUB_MISSIONS
+    data: *task_check
   C06:
     name: 点击PRO发布
     type: CLICK_IMG
@@ -74,8 +74,8 @@ task_publish: &task_publish
 task_publish_b:
   D01:
     name: 发布流程
-    type: operation
-    operations: *task_publish
+    type: SUB_MISSIONS
+    data: *task_publish
   D02:
     name: 输入DevB
     type: KEYBOARD_INPUT
@@ -97,8 +97,8 @@ task_publish_b:
 task_publish_test:
   E01:
     name: 发布流程
-    type: operation
-    operations: *task_publish
+    type: SUB_MISSIONS
+    data: *task_publish
   E02:
     name: 输入DevB
     type: KEYBOARD_INPUT
