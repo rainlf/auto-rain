@@ -1,9 +1,8 @@
-import threading
-
 from loguru import logger as log
 
-from task.task import Task, build_tasks_from_missions, running, listen_stop
+from task.task import Task, build_tasks_from_missions
 from utils import file_utils, yaml_utils
+import task.task_switch as task_switch
 
 
 class TaskRunner:
@@ -32,12 +31,9 @@ class TaskRunner:
         """
         按序执行任务，任务执行失败时继续执行本次任务，直到成功
         """
-        stop = threading.Thread(target=listen_stop)
-        stop.start()
-        print("Process started, Press 10 to stop")
+        stop = task_switch.open_switch()
         i = 0
-        while running and i < len(self.tasks):
-            print(f"TEST: {running}")
+        while task_switch.running and i < len(self.tasks):
             task = self.tasks[i]
             if task.run():
                 i += 1
