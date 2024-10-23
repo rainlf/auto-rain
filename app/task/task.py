@@ -2,10 +2,20 @@ import time
 from enum import Enum, auto
 from typing import Dict, List
 
+import keyboard
 from loguru import logger as log
 
 from utils import file_utils
 from utils import gui_utils
+
+running = True
+
+
+def listen_stop():
+    global running
+    keyboard.wait('F10')
+    print("F10 pressed, stop...")
+    running = False
 
 
 class TaskType(Enum):
@@ -68,13 +78,15 @@ class Task:
 
     def handle_sub_tasks(self, missions, times) -> bool:
         for _ in range(times):
-            log.info(f"do sub mission, time: {_ + 1}/{times}")
-            tasks = build_tasks_from_missions(self._module, missions)
-            i = 0
-            while i < len(tasks):
-                task = tasks[i]
-                if task.run():
-                    i += 1
+            if running:
+                log.info(f"do sub mission, time: {_ + 1}/{times}")
+                tasks = build_tasks_from_missions(self._module, missions)
+                i = 0
+                while running and i < len(tasks):
+                    print(f"TEST2: {running}")
+                    task = tasks[i]
+                    if task.run():
+                        i += 1
         return True
 
 

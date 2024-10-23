@@ -2,6 +2,7 @@ from task.task_runner import TaskRunner
 
 
 def run_task():
+    print('start run task: run infosafe')
     module = 'infosafe'
     mission = 'handles'
 

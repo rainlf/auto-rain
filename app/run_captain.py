@@ -2,6 +2,7 @@ from task.task_runner import TaskRunner
 
 
 def run_task():
+    print('start run task: run captain')
     module = 'captain'
     mission = 'task_publish_b'
 

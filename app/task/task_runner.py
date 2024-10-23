@@ -1,9 +1,8 @@
 import threading
 
-import keyboard
 from loguru import logger as log
 
-from task.task import Task, build_tasks_from_missions
+from task.task import Task, build_tasks_from_missions, running, listen_stop
 from utils import file_utils, yaml_utils
 
 
@@ -29,21 +28,16 @@ class TaskRunner:
         for task in self.tasks:
             task.dry_run()
 
-    def listen_stop(self):
-        global running
-        keyboard.wait('F10')
-        print("F10 pressed, stop...")
-        running = False
-
     def run(self):
         """
         按序执行任务，任务执行失败时继续执行本次任务，直到成功
         """
-        stop = threading.Thread(target=self.listen_stop)
+        stop = threading.Thread(target=listen_stop)
         stop.start()
         print("Process started, Press 10 to stop")
         i = 0
         while running and i < len(self.tasks):
+            print(f"TEST: {running}")
             task = self.tasks[i]
             if task.run():
                 i += 1
