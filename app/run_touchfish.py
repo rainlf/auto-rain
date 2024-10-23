@@ -12,28 +12,14 @@ import pyautogui
 running = True
 
 
-def listen_start():
-    global running
-    keyboard.wait('F9')
-    running = True
-
-
 def listen_stop():
     global running
     keyboard.wait('F10')
-    print("F10 pressed, stopped process")
+    print("F10 pressed, stop...")
     running = False
 
 
-def main():
-    # start = threading.Thread(target=listen_start)
-    stop = threading.Thread(target=listen_stop)
-    # start.start()
-    stop.start()
-
-    # print("Press F9 to start")
-    # start.join()
-    print("Process started, Press 10 to stop")
+def touch_fish():
     while running:
         pyautogui.click(200, 200)
         time.sleep(1)
@@ -44,8 +30,14 @@ def main():
         pyautogui.click(400, 200)
         time.sleep(1)
 
+
+def run_task():
+    stop = threading.Thread(target=listen_stop)
+    stop.start()
+    print("Process started, Press 10 to stop")
+    touch_fish()
     stop.join()
 
 
 if __name__ == '__main__':
-    main()
+    run_task()
