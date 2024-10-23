@@ -28,7 +28,7 @@ pip install -r requirements.txt
 运行
 ```shell
 cd app
-python xxx.py
+python app.py
 ```
 
 导出依赖
