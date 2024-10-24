@@ -37,4 +37,4 @@ class TaskRunner:
             task = self.tasks[i]
             if task.run():
                 i += 1
-        stop.join()
+        stop.join(1)
