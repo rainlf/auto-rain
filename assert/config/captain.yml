@@ -94,6 +94,10 @@ task_publish_b:
     name: 点击新建
     type: CLICK_IMG
     data: new.png
+  D06:
+    name: 点击跳转B
+    type: CLICK_IMG
+    data: jump-b.png
 
 # 发布Test
 task_publish_test:
