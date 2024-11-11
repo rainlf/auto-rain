@@ -16,6 +16,65 @@ task_idev: &task_idev
     type: CLICK_IMG
     data: idev-record.png
 
+
+# 发布UAT
+task_publish_uat:
+  C01:
+    name: 关联IDev
+    type: SUB_MISSIONS
+    data: *task_idev
+  C02:
+    name: 点击UAT开关
+    type: CLICK_IMG
+    data: uat-switch.png
+  C03:
+    name: 点击UAT发布
+    type: CLICK_IMG
+    data: uat-publish.png
+  C07:
+    name: 点击全选
+    type: CLICK_IMG
+    data: select-all.png
+  D04:
+    name: 点击下一步
+    type: CLICK_IMG
+    data: next.png
+  D05:
+    name: 点击新建
+    type: CLICK_IMG
+    data: new.png
+
+
+# 发布DEVB
+task_publish_devb:
+  C01:
+    name: 关联IDev
+    type: SUB_MISSIONS
+    data: *task_idev
+  D02:
+    name: 输入DevB
+    type: KEYBOARD_INPUT
+    data: dev_b
+    config:
+      sleep: 1.5
+  D03:
+    name: 点击DevB
+    type: CLICK_IMG
+    data: dev_b.png
+  D04:
+    name: 点击下一步
+    type: CLICK_IMG
+    data: next.png
+  D05:
+    name: 点击新建
+    type: CLICK_IMG
+    data: new.png
+  D06:
+    name: 点击跳转B
+    type: CLICK_IMG
+    data: jump-b.png
+
+
 # 前置检查
 task_check: &task_check
   B01:
@@ -39,8 +98,8 @@ task_check: &task_check
     type: CLICK_IMG
     data: pre-check-approve.png
 
-# 发布流程
-task_publish: &task_publish
+# 发布DevB
+task_publish_b_with_check:
   C01:
     name: 关联IDev
     type: SUB_MISSIONS
@@ -69,20 +128,13 @@ task_publish: &task_publish
     name: 点击选择Group
     type: CLICK_IMG
     data: group-select.png
-
-# 发布DevB
-task_publish_b:
-  D01:
-    name: 发布流程
-    type: SUB_MISSIONS
-    data: *task_publish
   D02:
     name: 输入DevB
     type: KEYBOARD_INPUT
     data: dev_b
     config:
       sleep: 1.5
-  D03: 
+  D03:
     name: 点击DevB
     type: CLICK_IMG
     data: dev_b.png
@@ -98,28 +150,3 @@ task_publish_b:
     name: 点击跳转B
     type: CLICK_IMG
     data: jump-b.png
-
-# 发布Test
-task_publish_test:
-  E01:
-    name: 发布流程
-    type: SUB_MISSIONS
-    data: *task_publish
-  E02:
-    name: 输入DevB
-    type: KEYBOARD_INPUT
-    data: test
-    config:
-      sleep: 1.5
-  E03:
-    name: 点击DevB
-    type: CLICK_IMG
-    data: test.png
-  E04:
-    name: 点击下一步
-    type: CLICK_IMG
-    data: next.png
-  E05:
-    name: 点击新建
-    type: CLICK_IMG
-    data: new.png

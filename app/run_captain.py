@@ -4,7 +4,7 @@ from task.task_runner import TaskRunner
 def run_task():
     print('start run task: run captain')
     module = 'captain'
-    mission = 'task_publish_b'
+    mission = 'task_publish_uat'
 
     task_runner = TaskRunner(module, mission)
     task_runner.run()
