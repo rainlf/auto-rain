@@ -51,10 +51,22 @@ task_publish_uat:
 
 # 发布DEVB
 task_publish_devb:
-  C01:
-    name: 关联IDev
-    type: SUB_MISSIONS
-    data: *task_idev
+  C04:
+    name: 点击PRO开关
+    type: CLICK_IMG
+    data: pro-switch.png
+  C02_1:
+    name: 审批通过
+    type: CLICK_IMG
+    data: check_pass.png
+  C06:
+    name: 点击PRO发布
+    type: CLICK_IMG
+    data: pro-release.png
+  C07:
+    name: 点击选择Group
+    type: CLICK_IMG
+    data: group-select.png
   D02:
     name: 输入DevB
     type: KEYBOARD_INPUT
@@ -78,6 +90,8 @@ task_publish_devb:
     type: CLICK_IMG
     data: jump-b.png
 
+
+## old blow
 
 # 前置检查
 task_check: &task_check
