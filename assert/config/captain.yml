@@ -27,6 +27,10 @@ task_publish_uat:
     name: 点击UAT开关
     type: CLICK_IMG
     data: uat-switch.png
+  C02_1:
+    name: 审批通过
+    type: CLICK_IMG
+    data: check_pass.png
   C03:
     name: 点击UAT发布
     type: CLICK_IMG
