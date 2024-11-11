@@ -36,9 +36,13 @@ task_publish_uat:
     type: CLICK_IMG
     data: uat-publish.png
   C07:
-    name: 点击全选
+    name: 点击选择Group
     type: CLICK_IMG
-    data: select-all.png
+    data: group-select.png
+  D03:
+    name: 点击Uat
+    type: CLICK_IMG
+    data: uat-group.png
   D04:
     name: 点击下一步
     type: CLICK_IMG
